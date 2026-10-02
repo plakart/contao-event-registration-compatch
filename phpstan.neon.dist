@@ -8,10 +8,10 @@ parameters:
             identifier: property.notFound
             message: '#^Access to an undefined property Contao\\(Template|ModuleModel|CalendarEventsModel)::\$#'
             path: src/Controller/FrontendModule/*
-        # Contao models resolve findOneBy<Column>() via __callStatic.
+        # Contao models resolve findOneBy<Column>() via __callStatic (here through the adapter's __call).
         -
-            identifier: staticMethod.notFound
-            message: '#EventRegistrationModel::findOneByUuid\(\)#'
+            identifier: method.notFound
+            message: '#Adapter<InspiredMinds\\ContaoEventRegistration\\Model\\EventRegistrationModel>::findOneByUuid\(\)#'
             path: src/Controller/FrontendModule/AbstractRegistrationActionController.php
             count: 1
         # Legacy templates render closures lazily, like the original plugin.

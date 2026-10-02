@@ -86,22 +86,35 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
 
         $uuids = UuidNormalizer::normalize($request->query->all()['uuid'] ?? null);
         $now = time();
+
+        /** @var array<int, EventRegistrationModel> $registrations keyed by registration ID */
         $registrations = [];
         $allowed = [];
         $messages = [];
 
         $template->showButton = false;
 
+        $registrationAdapter = $this->getContaoAdapter(EventRegistrationModel::class);
+        $eventAdapter = $this->getContaoAdapter(CalendarEventsModel::class);
+
         foreach ($uuids as $uuid) {
-            if (!$registration = EventRegistrationModel::findOneByUuid($uuid)) {
+            /** @var EventRegistrationModel|null $registration */
+            $registration = $registrationAdapter->findOneByUuid($uuid);
+
+            if (!$registration) {
                 throw new PageNotFoundException('No registration found.');
             }
 
-            if (!$event = CalendarEventsModel::findById((int) $registration->pid)) {
+            // Different spellings of a UUID can load the same registration.
+            if (isset($registrations[(int) $registration->id])) {
+                continue;
+            }
+
+            if (!$event = $eventAdapter->findById((int) $registration->pid)) {
                 throw new PageNotFoundException('No event found.');
             }
 
-            $registrations[] = $registration;
+            $registrations[(int) $registration->id] = $registration;
             $template->event = $event;
             $template->registration = $registration;
 
@@ -143,7 +156,7 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
             $changedEvents[(int) $event->id] = $event;
         }
 
-        $tokens = $this->eventRegistration->getSimpleTokensForMultipleRegistrations($registrations);
+        $tokens = $this->eventRegistration->getSimpleTokensForMultipleRegistrations(array_values($registrations));
 
         $template->content = function () use ($model, $tokens): ?string {
             if ($nodes = StringUtil::deserialize($model->nodes, true)) {
@@ -179,7 +192,11 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
 
         $template->showButton = true;
         $template->formId = $formId;
-        $template->formAction = StringUtil::specialchars($request->getRequestUri());
+        // Rebuild the URL instead of echoing the raw request URI: the normalized query
+        // string percent-encodes "{" and "}", so no insert tags reach the output.
+        $queryString = $request->getQueryString();
+        $formAction = $request->getBaseUrl().$request->getPathInfo().(null !== $queryString ? '?'.$queryString : '');
+        $template->formAction = StringUtil::specialchars($formAction, true);
         $template->requestToken = $this->csrfTokenManager->getDefaultTokenValue();
         $template->question = $this->translator->trans(
             $this->getAction().'_question',

@@ -10,3 +10,9 @@
 - Optional button mode per module (`compatch_requireButton`) against e-mail link
   scanners.
 - Config switches `confirm` and `cancel`.
+
+### Fixed
+
+- Parallel requests (link scanners) no longer send more than one mail.
+- Different spellings of the same UUID in one link count as one registration.
+- Insert tags in the request URL no longer reach the button form's action.
