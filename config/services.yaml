@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Plakart\ContaoEventRegistrationCompatch\:
+        resource: ../src/
+        exclude: ../src/{ContaoManager,DependencyInjection,Registration/Decision.php,PlakartContaoEventRegistrationCompatchBundle.php}
