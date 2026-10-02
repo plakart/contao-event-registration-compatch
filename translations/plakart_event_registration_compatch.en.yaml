@@ -1,0 +1,4 @@
+confirm_question: 'Do you want to confirm your registration for "%events%"?'
+confirm_button: 'Confirm registration'
+cancel_question: 'Do you really want to cancel your registration for "%events%"?'
+cancel_button: 'Cancel registration'

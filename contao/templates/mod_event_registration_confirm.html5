@@ -1,0 +1,21 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+  <?php if ($this->showButton): ?>
+    <?php if ($this->message): ?>
+      <p><?= $this->message ?></p>
+    <?php endif; ?>
+    <form method="post" action="<?= $this->formAction ?>" id="<?= $this->formId ?>">
+      <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
+      <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
+      <p><?= $this->question ?></p>
+      <button type="submit" class="submit"><?= $this->buttonLabel ?></button>
+    </form>
+  <?php elseif ($this->message): ?>
+    <p><?= $this->message ?></p>
+  <?php else: ?>
+    <?= $this->content ?>
+  <?php endif; ?>
+
+<?php $this->endblock(); ?>

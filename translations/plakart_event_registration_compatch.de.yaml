@@ -1,0 +1,4 @@
+confirm_question: 'Möchten Sie Ihre Anmeldung für „%events%“ verbindlich bestätigen?'
+confirm_button: 'Anmeldung bestätigen'
+cancel_question: 'Möchten Sie Ihre Anmeldung für „%events%“ wirklich stornieren?'
+cancel_button: 'Anmeldung stornieren'
