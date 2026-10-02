@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Plakart\ContaoEventRegistrationCompatch\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Plakart\ContaoEventRegistrationCompatch\Controller\FrontendModule\CancelController;
 use Plakart\ContaoEventRegistrationCompatch\Controller\FrontendModule\ConfirmController;
 use Plakart\ContaoEventRegistrationCompatch\DependencyInjection\PlakartContaoEventRegistrationCompatchExtension;
 use Plakart\ContaoEventRegistrationCompatch\Registration\StatusChanger;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class PlakartContaoEventRegistrationCompatchExtensionTest extends TestCase

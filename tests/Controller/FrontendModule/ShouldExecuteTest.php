@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Plakart\ContaoEventRegistrationCompatch\Tests\Controller\FrontendModule;
 
-use Plakart\ContaoEventRegistrationCompatch\Controller\FrontendModule\AbstractRegistrationActionController;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Plakart\ContaoEventRegistrationCompatch\Controller\FrontendModule\AbstractRegistrationActionController;
 use Symfony\Component\HttpFoundation\Request;
 
 final class ShouldExecuteTest extends TestCase

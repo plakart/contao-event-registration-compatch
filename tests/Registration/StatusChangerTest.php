@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Plakart\ContaoEventRegistrationCompatch\Tests\Registration;
 
-use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
-use Plakart\ContaoEventRegistrationCompatch\Registration\StatusChanger;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
+use Plakart\ContaoEventRegistrationCompatch\Registration\StatusChanger;
 
 final class StatusChangerTest extends TestCase
 {
@@ -29,7 +29,7 @@ final class StatusChangerTest extends TestCase
     }
 
     #[DataProvider('confirmProvider')]
-    public function testDecideConfirm(bool $confirmed, bool $cancelled, int|null $regEnd, Decision $expected): void
+    public function testDecideConfirm(bool $confirmed, bool $cancelled, ?int $regEnd, Decision $expected): void
     {
         $this->assertSame($expected, (new StatusChanger())->decideConfirm($confirmed, $cancelled, $regEnd, self::NOW));
     }
@@ -48,7 +48,7 @@ final class StatusChangerTest extends TestCase
     }
 
     #[DataProvider('cancelProvider')]
-    public function testDecideCancel(bool $cancelled, int|null $cancelEnd, Decision $expected): void
+    public function testDecideCancel(bool $cancelled, ?int $cancelEnd, Decision $expected): void
     {
         $this->assertSame($expected, (new StatusChanger())->decideCancel($cancelled, $cancelEnd, self::NOW));
     }

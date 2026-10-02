@@ -10,7 +10,7 @@ namespace Plakart\ContaoEventRegistrationCompatch\Registration;
  */
 final class StatusChanger
 {
-    public function decideConfirm(bool $confirmed, bool $cancelled, int|null $regEnd, int $now): Decision
+    public function decideConfirm(bool $confirmed, bool $cancelled, ?int $regEnd, int $now): Decision
     {
         if ($confirmed) {
             return Decision::AlreadyConfirmed;
@@ -27,7 +27,7 @@ final class StatusChanger
         return Decision::Allowed;
     }
 
-    public function decideCancel(bool $cancelled, int|null $cancelEnd, int $now): Decision
+    public function decideCancel(bool $cancelled, ?int $cancelEnd, int $now): Decision
     {
         if ($cancelled) {
             return Decision::AlreadyCancelled;

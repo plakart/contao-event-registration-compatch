@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Plakart\ContaoEventRegistrationCompatch\Tests\Request;
 
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Plakart\ContaoEventRegistrationCompatch\Request\UuidNormalizer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Plakart\ContaoEventRegistrationCompatch\Request\UuidNormalizer;
 
 final class UuidNormalizerTest extends TestCase
 {

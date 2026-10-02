@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Plakart\ContaoEventRegistrationCompatch\Tests\Registration;
 
-use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
 
 final class DecisionTest extends TestCase
 {

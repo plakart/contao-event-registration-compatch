@@ -68,7 +68,7 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
     {
     }
 
-    protected static function toTimestamp(mixed $value): int|null
+    protected static function toTimestamp(mixed $value): ?int
     {
         return empty($value) ? null : (int) $value;
     }
@@ -134,7 +134,7 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
 
         $tokens = $this->eventRegistration->getSimpleTokensForMultipleRegistrations($registrations);
 
-        $template->content = function () use ($model, $tokens): string|null {
+        $template->content = function () use ($model, $tokens): ?string {
             if ($nodes = StringUtil::deserialize($model->nodes, true)) {
                 return $this->simpleTokenParser->parse(implode('', $this->nodeManager->generateMultiple($nodes)), $tokens);
             }
