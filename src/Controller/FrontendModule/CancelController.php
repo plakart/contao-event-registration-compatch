@@ -14,6 +14,7 @@ use InspiredMinds\ContaoEventRegistration\Model\EventRegistrationModel;
 use InspiredMinds\ContaoEventRegistration\WaitingListChecker;
 use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
 use Plakart\ContaoEventRegistrationCompatch\Registration\StatusChanger;
+use Plakart\ContaoEventRegistrationCompatch\Registration\StatusWriter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\NodeBundle\NodeManager;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
@@ -31,10 +32,11 @@ final class CancelController extends AbstractRegistrationActionController
         SimpleTokenParser $simpleTokenParser,
         NotificationCenter $notificationCenter,
         StatusChanger $statusChanger,
+        StatusWriter $statusWriter,
         ContaoCsrfTokenManager $csrfTokenManager,
         private readonly WaitingListChecker $waitingListChecker,
     ) {
-        parent::__construct($eventRegistration, $nodeManager, $translator, $simpleTokenParser, $notificationCenter, $statusChanger, $csrfTokenManager);
+        parent::__construct($eventRegistration, $nodeManager, $translator, $simpleTokenParser, $notificationCenter, $statusChanger, $statusWriter, $csrfTokenManager);
     }
 
     protected function getAction(): string
@@ -51,10 +53,9 @@ final class CancelController extends AbstractRegistrationActionController
         );
     }
 
-    protected function apply(EventRegistrationModel $registration): void
+    protected function apply(EventRegistrationModel $registration): bool
     {
-        $registration->cancelled = true;
-        $registration->save();
+        return $this->statusWriter->markCancelled((int) $registration->id);
     }
 
     protected function afterChange(array $events): void

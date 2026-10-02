@@ -16,6 +16,7 @@ use InspiredMinds\ContaoEventRegistration\EventRegistration;
 use InspiredMinds\ContaoEventRegistration\Model\EventRegistrationModel;
 use Plakart\ContaoEventRegistrationCompatch\Registration\Decision;
 use Plakart\ContaoEventRegistrationCompatch\Registration\StatusChanger;
+use Plakart\ContaoEventRegistrationCompatch\Registration\StatusWriter;
 use Plakart\ContaoEventRegistrationCompatch\Request\UuidNormalizer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,7 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
         private readonly SimpleTokenParser $simpleTokenParser,
         private readonly NotificationCenter $notificationCenter,
         protected readonly StatusChanger $statusChanger,
+        protected readonly StatusWriter $statusWriter,
         private readonly ContaoCsrfTokenManager $csrfTokenManager,
     ) {
     }
@@ -57,7 +59,10 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
 
     abstract protected function decide(EventRegistrationModel $registration, CalendarEventsModel $event, int $now): Decision;
 
-    abstract protected function apply(EventRegistrationModel $registration): void;
+    /**
+     * Changes the status atomically. Returns false if a parallel request was faster.
+     */
+    abstract protected function apply(EventRegistrationModel $registration): bool;
 
     /**
      * Called once after at least one registration changed.
@@ -127,7 +132,13 @@ abstract class AbstractRegistrationActionController extends AbstractFrontendModu
         $changedEvents = [];
 
         foreach ($allowed as [$registration, $event]) {
-            $this->apply($registration);
+            $isChanged = $this->apply($registration);
+            $registration->refresh();
+
+            if (!$isChanged) {
+                continue;
+            }
+
             $changed[] = $registration;
             $changedEvents[(int) $event->id] = $event;
         }

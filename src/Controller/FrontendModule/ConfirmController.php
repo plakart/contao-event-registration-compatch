@@ -31,9 +31,8 @@ final class ConfirmController extends AbstractRegistrationActionController
         );
     }
 
-    protected function apply(EventRegistrationModel $registration): void
+    protected function apply(EventRegistrationModel $registration): bool
     {
-        $registration->confirmed = true;
-        $registration->save();
+        return $this->statusWriter->markConfirmed((int) $registration->id);
     }
 }

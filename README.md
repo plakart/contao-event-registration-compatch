@@ -84,6 +84,8 @@ Run on a test installation before every release:
   cancellation promotes waiting-list registrations.
 - Multiple registrations in one link: one button; mixed states show the messages
   plus the button.
+- Parallel requests (like scanners firing several at once), e.g.
+  `for i in 1 2 3; do curl -s -o /dev/null '<link>' & done; wait` → exactly one mail.
 - `confirm: false` → original behaviour again.
 - The confirmation page is sent with `Cache-Control: private, no-store`.
 

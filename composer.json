@@ -16,6 +16,7 @@
         "php": ">=8.1",
         "contao/calendar-bundle": "^5.3",
         "contao/core-bundle": "^5.3",
+        "doctrine/dbal": "^3.6 || ^4.0",
         "inspiredminds/contao-event-registration": ">=2.2 <2.4",
         "terminal42/contao-node": "*",
         "terminal42/notification_center": "^2.0"
