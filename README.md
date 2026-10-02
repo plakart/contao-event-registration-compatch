@@ -21,13 +21,28 @@ With this bundle:
 
 ## Installation
 
+The package is not on Packagist. Add the GitHub repository to the project's
+`composer.json` and require `dev-main`:
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/plakart/contao-event-registration-compatch"
+    }
+],
+"require": {
+    "plakart/contao-event-registration-compatch": "dev-main"
+}
+```
+
 ```bash
-composer require plakart/contao-event-registration-compatch
+composer update plakart/contao-event-registration-compatch
 vendor/bin/contao-console contao:migrate
 ```
 
-or install it with the Contao Manager. Both fixes are active immediately; existing
-modules and templates keep working without changes.
+Both fixes are active immediately; existing modules and templates keep working
+without changes.
 
 ## Button mode
 
@@ -96,8 +111,8 @@ behaviour. When the plugin releases a new version: compare
 `EventRegistrationConfirmController`, `EventRegistrationCancelController`,
 `EventRegistration::getSimpleTokensForMultipleRegistrations()` and
 `WaitingListChecker` with the supported versions, extend the version constraint
-in `composer.json` and release a new version. If the fix is merged upstream,
-the bundle can be removed.
+in `composer.json` and push to `main` (installations track `dev-main`). If the fix
+is merged upstream, the bundle can be removed.
 
 ## License
 
