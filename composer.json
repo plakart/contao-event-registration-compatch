@@ -1,0 +1,58 @@
+{
+    "name": "plakart/contao-event-registration-compatch",
+    "description": "Fixes for inspiredminds/contao-event-registration: confirm/cancel notifications only on real status changes, optional confirmation button against e-mail link scanners",
+    "type": "contao-bundle",
+    "license": "LGPL-3.0-or-later",
+    "keywords": ["contao", "event registration", "notification", "link scanner"],
+    "authors": [
+        {
+            "name": "Agentur plakart",
+            "email": "technik@plakart.de",
+            "homepage": "https://plakart.de",
+            "role": "Publisher"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "contao/calendar-bundle": "^5.3",
+        "contao/core-bundle": "^5.3",
+        "inspiredminds/contao-event-registration": ">=2.2 <2.4",
+        "terminal42/contao-node": "*",
+        "terminal42/notification_center": "^2.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.40",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^10.5 || ^11.0"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plakart\\ContaoEventRegistrationCompatch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Plakart\\ContaoEventRegistrationCompatch\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Plakart\\ContaoEventRegistrationCompatch\\ContaoManager\\Plugin"
+    },
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse",
+        "test": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-components/installer": true,
+            "contao/manager-plugin": true,
+            "php-http/discovery": true
+        },
+        "sort-packages": true
+    }
+}
