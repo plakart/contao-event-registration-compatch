@@ -2,3 +2,21 @@ parameters:
     level: 6
     paths:
         - src
+    ignoreErrors:
+        # Contao templates and models expose their data via magic __get/__set.
+        -
+            identifier: property.notFound
+            message: '#^Access to an undefined property Contao\\(Template|ModuleModel|CalendarEventsModel)::\$#'
+            path: src/Controller/FrontendModule/*
+        # Contao models resolve findOneBy<Column>() via __callStatic.
+        -
+            identifier: staticMethod.notFound
+            message: '#EventRegistrationModel::findOneByUuid\(\)#'
+            path: src/Controller/FrontendModule/AbstractRegistrationActionController.php
+            count: 1
+        # Legacy templates render closures lazily, like the original plugin.
+        -
+            identifier: assign.propertyType
+            message: '#^Property Contao\\Template::\$content \(string\) does not accept Closure\.$#'
+            path: src/Controller/FrontendModule/AbstractRegistrationActionController.php
+            count: 1
